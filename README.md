@@ -24,9 +24,10 @@ python sistema_reserva_salas.py
 
 
 ## Integrantes
-Fabio Henrique Santos Farias
-Carlos Augusto da Cruz Possi
-João Pedro Bernardo Santos da Silva
+
+- 👨‍💻 Fabio Henrique Santos Farias 
+- 👨‍💻 Carlos Augusto da Cruz Possi  
+- 👨‍💻 João Pedro Bernardo Santos da Silva 
 
 ## Links
  🧠 **Miro (Documentação e Diagramas)**  
