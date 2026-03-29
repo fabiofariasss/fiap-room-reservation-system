@@ -56,3 +56,6 @@ python src/sistema_reserva_salas.py
 
 🧠 **Miro (Documentação e Diagramas)**
 https://miro.com/app/board/uXjVGwGD7H4=/?share_link_id=899993910065
+
+💻 **Colab**
+https://colab.research.google.com/drive/1IDkm92TqKFn3YvFlW22JfamUdzKsnMz9?usp=sharing
