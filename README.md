@@ -1,5 +1,7 @@
 # 🏫 Sistema de Reserva de Salas FIAP
 
+![thumbnail](docs/image.png)
+
 ---
 
 ## 📌 Descrição do Problema
