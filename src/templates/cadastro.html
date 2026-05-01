@@ -6,7 +6,7 @@
         <p style="color: var(--text-secondary); margin-top: 8px;">Comece a gerenciar suas salas agora.</p>
     </div>
     
-    <form method="POST" action="{{ url_for('cadastro') }}">
+    <form method="POST" action="{{ url_for('auth.cadastro') }}">
         <div class="form-group">
             <label>Nome Completo</label>
             <input type="text" name="nome" required placeholder="Como quer ser chamado?">
@@ -22,7 +22,7 @@
         <button type="submit" class="btn btn-primary">Criar Conta</button>
     </form>
     <p style="margin-top: 32px; font-size: 0.875rem; color: var(--text-secondary);">
-        Já possui conta? <a href="{{ url_for('login') }}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Fazer Login</a>
+        Já possui conta? <a href="{{ url_for('auth.login') }}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Fazer Login</a>
     </p>
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@
         <p style="color: var(--text-secondary); margin-top: 8px;">Acesse sua conta FIAP Rooms</p>
     </div>
     
-    <form method="POST" action="{{ url_for('login') }}">
+    <form method="POST" action="{{ url_for('auth.login') }}">
         <div class="form-group">
             <label>E-mail Corporativo</label>
             <input type="email" name="email" required placeholder="seu@email.com">
@@ -18,7 +18,7 @@
         <button type="submit" class="btn btn-primary">Entrar no Dashboard</button>
     </form>
     <p style="margin-top: 32px; font-size: 0.875rem; color: var(--text-secondary);">
-        Novo por aqui? <a href="{{ url_for('cadastro') }}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Crie uma conta gratuita</a>
+        Novo por aqui? <a href="{{ url_for('auth.cadastro') }}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Crie uma conta gratuita</a>
     </p>
 </div>
 {% endblock %}

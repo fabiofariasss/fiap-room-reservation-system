@@ -35,17 +35,17 @@
     <div class="section-title">Ações Rápidas</div>
 </div>
 <div class="quick-actions">
-    <a href="{{ url_for('reservar') }}" class="action-btn">
+    <a href="{{ url_for('views.reservar') }}" class="action-btn">
         <span class="action-icon">📅</span>
         <span class="action-label">Nova Reserva</span>
         <span class="action-desc">Agendar uma sala disponível</span>
     </a>
-    <a href="{{ url_for('reservas_view') }}" class="action-btn">
+    <a href="{{ url_for('views.reservas_view') }}" class="action-btn">
         <span class="action-icon">🗓️</span>
         <span class="action-label">Ver Agenda do Dia</span>
         <span class="action-desc">Todas as reservas de hoje</span>
     </a>
-    <a href="{{ url_for('reservar') }}" class="action-btn">
+    <a href="{{ url_for('views.reservar') }}" class="action-btn">
         <span class="action-icon">🔍</span>
         <span class="action-label">Buscar Sala Livre</span>
         <span class="action-desc">Verificar disponibilidade</span>
@@ -112,7 +112,7 @@
 <div class="panel">
     <div class="section-header" style="margin-bottom:14px; margin-top: 0;">
         <div class="section-title">Suas Últimas Reservas</div>
-        <a href="{{ url_for('reservas_view') }}" class="ver-tudo">Ver tudo →</a>
+        <a href="{{ url_for('views.reservas_view') }}" class="ver-tudo">Ver tudo →</a>
     </div>
     {% if atividades %}
         <table style="width: 100%;">

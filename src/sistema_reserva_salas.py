@@ -1,24 +1,10 @@
-import json
 import os
+import sys
 
-ARQUIVO = "data/reservas.json"
+# Adiciona o diretório src ao path para permitir imports relativos quando executado de fora
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# =========================
-# UTILIDADES
-# =========================
-
-def carregar_reservas():
-    if not os.path.exists(ARQUIVO):
-        return []
-    with open(ARQUIVO, "r") as f:
-        return json.load(f)
-
-
-def salvar_reservas(reservas):
-    os.makedirs("data", exist_ok=True)
-    with open(ARQUIVO, "w") as f:
-        json.dump(reservas, f, indent=4)
-
+from models.utils import RESERVAS_FILE, load_json, save_json
 
 # =========================
 # CASOS DE USO
@@ -38,22 +24,29 @@ def listar_reservas(reservas):
         return
 
     for r in reservas:
-        print(f"Nome: {r['nome']} | Sala: {r['sala']} | Horário: {r['horario']}")
+        # Nota: O formato JSON do app.py tem campos diferentes (dia, inicio, fim)
+        # Adaptando para mostrar informações extras se disponíveis
+        horario = f"{r.get('dia', '')} {r.get('inicio', '')}-{r.get('fim', '')}".strip()
+        if not horario: horario = r.get('horario', 'N/A')
+        
+        print(f"Nome: {r['nome']} | Sala: {r['sala']} | Horário: {horario}")
 
 
 def validar_disponibilidade(reservas, sala, horario):
+    # Nota: Esta validação simples do CLI original não lida com o formato novo de dia/inicio/fim
+    # Para manter compatibilidade simples, verificamos apenas igualdade exata se 'horario' for usado
     for r in reservas:
-        if r["sala"] == sala and r["horario"] == horario:
+        if r["sala"] == sala and r.get("horario") == horario:
             return False
     return True
 
 
 def reservar_sala(reservas):
-    print("\n📝 Nova Reserva")
+    print("\n📝 Nova Reserva (Modo CLI)")
 
     nome = input("Digite seu nome: ").strip()
     sala = input("Digite a sala: ").strip()
-    horario = input("Digite o horário: ").strip()
+    horario = input("Digite o horário (ex: 2026-05-10 10:00-11:00): ").strip()
 
     # validação de entrada
     if not nome or not sala or not horario:
@@ -71,7 +64,7 @@ def reservar_sala(reservas):
         "horario": horario
     })
 
-    salvar_reservas(reservas)
+    save_json(RESERVAS_FILE, reservas)
     print("✅ Reserva realizada com sucesso!")
 
 
@@ -80,14 +73,17 @@ def cancelar_reserva(reservas):
 
     nome = input("Digite seu nome: ").strip()
 
-    for r in reservas:
+    encontrado = False
+    for r in list(reservas):
         if r["nome"] == nome:
             reservas.remove(r)
-            salvar_reservas(reservas)
-            print("✅ Reserva cancelada!")
-            return
-
-    print("❌ Nenhuma reserva encontrada para esse nome.")
+            encontrado = True
+    
+    if encontrado:
+        save_json(RESERVAS_FILE, reservas)
+        print("✅ Reserva(s) cancelada(s)!")
+    else:
+        print("❌ Nenhuma reserva encontrada para esse nome.")
 
 
 # =========================
@@ -95,10 +91,11 @@ def cancelar_reserva(reservas):
 # =========================
 
 def menu():
-    reservas = carregar_reservas()
-
     while True:
-        print("\n=== Sistema de Reserva de Salas ===")
+        # Recarregar reservas a cada loop para pegar mudanças do Web App
+        reservas = load_json(RESERVAS_FILE)
+        
+        print("\n=== Sistema de Reserva de Salas (CLI) ===")
         print("1 - Visualizar salas")
         print("2 - Listar reservas")
         print("3 - Reservar sala")

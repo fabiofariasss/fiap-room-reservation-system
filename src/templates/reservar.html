@@ -7,7 +7,7 @@
     </header>
     
     <div class="auth-card" style="max-width: 100%; padding: 40px; margin: 0;">
-        <form method="POST" action="{{ url_for('reservar') }}">
+        <form method="POST" action="{{ url_for('views.reservar') }}">
             <div class="form-group">
                 <label>Sala de Estudo</label>
                 <select name="sala" required>
@@ -31,7 +31,7 @@
             </div>
             <div style="display: flex; gap: 16px;">
                 <button type="submit" class="btn btn-primary">Confirmar Agendamento</button>
-                <a href="{{ url_for('dashboard') }}" class="btn btn-danger" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); width: auto;">Cancelar</a>
+                <a href="{{ url_for('views.dashboard') }}" class="btn btn-danger" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); width: auto;">Cancelar</a>
             </div>
         </form>
     </div>
