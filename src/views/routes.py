@@ -3,11 +3,12 @@ from datetime import datetime
 from . import views_bp
 from auth.routes import login_required
 from models.utils import RESERVAS_FILE, load_json, save_json
+from models.entidades import Reserva
 
 @views_bp.route('/dashboard')
 @login_required
 def dashboard():
-    reservas = load_json(RESERVAS_FILE)
+    reservas_data = load_json(RESERVAS_FILE)
     email_usuario = session.get('user_email')
     agora_dt = datetime.now()
     hoje = agora_dt.strftime("%Y-%m-%d")
@@ -16,15 +17,15 @@ def dashboard():
     todas_salas = ["Sala 1", "Sala 2", "Sala 3"]
     
     # 1. Estatísticas Básicas
-    total_reservas = len(reservas)
-    salas_ocupadas_agora = [r['sala'] for r in reservas if r.get('dia') == hoje and r.get('inicio', '') <= agora_hora < r.get('fim', '')]
+    total_reservas = len(reservas_data)
+    salas_ocupadas_agora = [r['sala'] for r in reservas_data if r.get('dia') == hoje and r.get('inicio', '') <= agora_hora < r.get('fim', '')]
     salas_disponiveis_count = len(todas_salas) - len(set(salas_ocupadas_agora))
     
-    # 2. Ocupação Hoje (Cálculo de % baseado em horas reservadas / 12h úteis)
+    # 2. Ocupação Hoje
     ocupacao = {}
     for sala in todas_salas:
         horas_reservadas = 0
-        for r in reservas:
+        for r in reservas_data:
             if r.get('dia') == hoje and r['sala'] == sala:
                 h1 = datetime.strptime(r['inicio'], "%H:%M")
                 h2 = datetime.strptime(r['fim'], "%H:%M")
@@ -32,10 +33,10 @@ def dashboard():
         ocupacao[sala] = min(100, int((horas_reservadas / 12) * 100))
     
     # 3. Próxima Reserva e Atividades
-    minhas_reservas = [r for r in reservas if r.get('email') == email_usuario and (r.get('dia') > hoje or (r.get('dia') == hoje and r.get('fim', '') > agora_hora))]
+    minhas_reservas = [r for r in reservas_data if r.get('email') == email_usuario and (r.get('dia') > hoje or (r.get('dia') == hoje and r.get('fim', '') > agora_hora))]
     minhas_reservas.sort(key=lambda x: (x['dia'], x['inicio']))
     
-    minhas_atividades = [r for r in reservas if r.get('email') == email_usuario]
+    minhas_atividades = [r for r in reservas_data if r.get('email') == email_usuario]
     minhas_atividades.sort(key=lambda x: (x['dia'], x['inicio']), reverse=True)
     
     return render_template('dashboard.html', 
@@ -72,25 +73,27 @@ def reservar():
             flash("❌ Dados inválidos! Verifique horários e data.", "error")
             return render_template('reservar.html', salas=salas)
 
-        reservas = load_json(RESERVAS_FILE)
+        reservas_data = load_json(RESERVAS_FILE)
         
         conflito = any(
             r['sala'] == sala and r.get('dia') == dia and (inicio < r['fim'] and fim > r['inicio'])
-            for r in reservas
+            for r in reservas_data
         )
         
         if conflito:
             flash("❌ Conflito! Esta sala já está ocupada neste horário no dia selecionado.", "error")
         else:
-            reservas.append({
-                "nome": session.get('user_nome'),
-                "email": session.get('user_email'),
-                "sala": sala,
-                "dia": dia,
-                "inicio": inicio,
-                "fim": fim
-            })
-            save_json(RESERVAS_FILE, reservas)
+            # Usando a classe Reserva
+            nova_reserva = Reserva(
+                sala=sala, 
+                dia=dia, 
+                inicio=inicio, 
+                fim=fim, 
+                email=session.get('user_email'),
+                nome=session.get('user_nome')
+            )
+            reservas_data.append(nova_reserva.to_dict())
+            save_json(RESERVAS_FILE, reservas_data)
             flash("✅ Reserva realizada com sucesso!", "success")
             return redirect(url_for('views.reservas_view'))
             
@@ -130,3 +133,4 @@ def cancelar():
         flash("❌ Erro ao cancelar reserva.", "error")
         
     return redirect(url_for('views.reservas_view'))
+

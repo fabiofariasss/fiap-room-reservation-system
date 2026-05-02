@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 from functools import wraps
 from . import auth_bp
 from models.utils import USERS_FILE, load_json, save_json
+from models.entidades import Usuario
 
 def login_required(f):
     @wraps(f)
@@ -19,13 +20,15 @@ def cadastro():
         email = request.form.get('email')
         senha = request.form.get('senha')
         
-        users = load_json(USERS_FILE)
+        users_data = load_json(USERS_FILE)
         
-        if any(u['email'] == email for u in users):
+        if any(u['email'] == email for u in users_data):
             flash("E-mail já cadastrado!", "error")
         else:
-            users.append({'nome': nome, 'email': email, 'senha': senha})
-            save_json(USERS_FILE, users)
+            # Usando a classe Usuario
+            novo_usuario = Usuario(nome=nome, email=email, senha=senha)
+            users_data.append(novo_usuario.to_dict())
+            save_json(USERS_FILE, users_data)
             flash("Cadastro realizado com sucesso! Faça login.", "success")
             return redirect(url_for('auth.login'))
             
@@ -41,15 +44,18 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
         
-        users = load_json(USERS_FILE)
-        user = next((u for u in users if u['email'] == email and u['senha'] == senha), None)
+        users_data = load_json(USERS_FILE)
+        user_dict = next((u for u in users_data if u['email'] == email), None)
         
-        if user:
-            session['user_email'] = user['email']
-            session['user_nome'] = user['nome']
-            return redirect(url_for('views.dashboard'))
-        else:
-            flash("E-mail ou senha incorretos.", "error")
+        if user_dict:
+            # Convertendo dict para objeto Usuario para usar o método verificar_senha
+            user = Usuario.from_dict(user_dict)
+            if user.verificar_senha(senha):
+                session['user_email'] = user.email
+                session['user_nome'] = user.nome
+                return redirect(url_for('views.dashboard'))
+        
+        flash("E-mail ou senha incorretos.", "error")
             
     return render_template('login.html')
 
