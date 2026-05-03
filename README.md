@@ -49,11 +49,6 @@ python src/sistema_reserva_salas.py
 ## 🎥 Demonstração so Site
 <img width="1920" height="1020" alt="FIAP Rooms _ Dashboard - Google Chrome 2026-05-03 18-05-09" src="https://github.com/user-attachments/assets/6f388a2d-9e8f-4167-9d78-8fe7ca6c38c4" />
 
-<br>
-<br
-  
-🔗 https://fiap-room-reservation-system.onrender.com/dashboard
-
 ---
 
 ## 👥 Integrantes
@@ -71,3 +66,6 @@ https://miro.com/app/board/uXjVGwGD7H4=/?share_link_id=899993910065
 
 💻 **Colab**
 https://colab.research.google.com/drive/1IDkm92TqKFn3YvFlW22JfamUdzKsnMz9?usp=sharing
+
+🔗 **Render**
+https://fiap-room-reservation-system.onrender.com/dashboard
