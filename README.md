@@ -1,6 +1,6 @@
 # 🏫 Sistema de Reserva de Salas FIAP
 
-![thumbnail](docs/image.png)
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/defadfd0-6aa2-49a3-89c0-41e7e3513717" />
 
 ---
 
