@@ -96,4 +96,4 @@ Em ambientes acadêmicos dinâmicos, a visualização rápida e gráfica da disp
 ## 🔗 Links
 🧠 **Miro (Documentação e Diagramas):** [Acessar Board](https://miro.com/app/board/uXjVGwGD7H4=/?share_link_id=899993910065)  
 💻 **Google Colab (Protótipo Inicial):** [Acessar Notebook](https://colab.research.google.com/drive/1IDkm92TqKFn3YvFlW22JfamUdzKsnMz9?usp=sharing)  
-📺 **Vídeo de Apresentação:** [Link do Vídeo](URL_AQUI)  
+📺 **Render:** [Link do deploy](https://fiap-room-reservation-system.onrender.com/)  
