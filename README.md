@@ -89,9 +89,9 @@ Em ambientes acadêmicos dinâmicos, a visualização rápida e gráfica da disp
 *Veja o funcionamento básico do sistema no GIF acima.*
 
 ## 👥 Integrantes do Grupo
-* **Fabio Henrique Santos Farias** (RM: 552453 )
-* **Carlos Augusto da Cruz Possi** (RM: 558758 )
-* **João Pedro Bernardo Santos da Silva** (RM: 557142 )
+* **Fabio Henrique Santos Farias** (RM: 552453)
+* **Carlos Augusto da Cruz Possi** (RM: 558758)
+* **João Pedro Bernardo Santos da Silva** (RM: 557142)
 
 ## 🔗 Links
 🧠 **Miro (Documentação e Diagramas):** [Acessar Board](https://miro.com/app/board/uXjVGwGD7H4=/?share_link_id=899993910065)  
