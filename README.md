@@ -85,7 +85,7 @@ Em ambientes acadêmicos dinâmicos, a visualização rápida e gráfica da disp
 * [FIAP - Material de Microservices and Web Applications](https://www.fiap.com.br/)
 
 ## 🎥 Demonstração
-![Demo do sistema](docs/Animação.gif)
+![Demo do sistema](docs/animacao.gif)
 *Veja o funcionamento básico do sistema no GIF acima.*
 
 ## 👥 Integrantes do Grupo
